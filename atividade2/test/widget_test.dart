@@ -1,30 +1,21 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+import 'package:atividade2/contaCorrente.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:atividade2/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('ContaBancaria', () {
+    test('Depósito e saque em Conta Corrente', () {
+      var conta = ContaCorrente(123, 1000.0, 500.0);
+      conta.depositar(500.0);
+      expect(conta.saldo, 1500.0);
+      conta.sacar(2000.0);
+      expect(conta.saldo, -500.0);
+    });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    test('Aplicação de juros em Conta Poupança', () {
+      var conta = ContaPoupanca(456, 1000.0, 0.05);
+      conta.aplicarJuros();
+      expect(conta.saldo, 1050.0);
+    });
   });
 }
